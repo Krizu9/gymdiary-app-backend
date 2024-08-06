@@ -1,0 +1,27 @@
+### register
+POST http://localhost:5001/register
+content-type: application/json
+
+{
+    "name": "admin3",
+    "email": "kristian@gootoogle.com",
+    "password": "admin3",
+    "passwordConfirmation": "admin3"
+}
+
+### login
+POST http://localhost:5001/login
+content-type: application/json
+
+{
+  "name": "admin3",
+  "password": "admin3"
+}
+
+###token
+POST http://localhost:5001/checkToken
+content-type: application/json
+
+{
+  "token": "esimerkkitoken"
+}
