@@ -1,41 +1,41 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { User } = require('../models/User');
 require('dotenv').config();
+const { User } = require('../models/user');
 
 const login = async (req, res) => {
     try {
         const { name, password } = req.body;
-        console.log('login request received');
-        console.log('name: ' + name + ' password: ' + password);
+
+        // validation
         if (!name || !password) {
-            res.status(401).json({ error: 'No username or password delivered' });
+            return res.status(401).json({ error: 'No name or password delivered' });
         }
+
+        // find the user
         const user = await User.findOne({ name });
-
-        const passwordCorrect = user === null ? false : await bcrypt.compare(password, user.password);
-
-        if (!(user && passwordCorrect)) {
-            return res.status(401).json({ error: 'invalid username or password' })
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid username or password' });
         }
 
+        // check password
+        const passwordCorrect = await bcrypt.compare(password, user.password);
+        if (!passwordCorrect) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+
+        // generate JWT
         const userForToken = {
-            name: name,
+            name: user.name,
             id: user._id
-        }
+        };
 
         const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
-        console.log('login success');
-        res.setHeader('Content-Type', 'application/json');
-        res.send({ token: token, user: user._id });
-        res.status(200).json({ response: "OK!" });
+        res.status(200).json({ token, user: user._id });
+    } catch (error) {
+        console.error('Login failed:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    catch (error) {
-        console.log('login failed ' + error.message);
-
-    };
-}
-
-
+};
 
 module.exports = login;
