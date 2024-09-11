@@ -10,16 +10,12 @@ const checkToken = async (req, res) => {
         }
 
         const [tokenPart, userId] = token.split(',');
-
         const decodedToken = jwt.verify(tokenPart, process.env.ACCESS_TOKEN_SECRET);
 
-        res.setHeader('Content-Type', 'application/json');
-        res.send({ access: decodedToken });
-        res.status(200).json({ response: "OK!" });
+        return res.status(200).json({ access: decodedToken, response: "OK!" });
     } catch (error) {
-        console.log('checkToken failed ' + error.message);
+        return res.status(500).json({ error: 'Token verification failed' });
     }
-
 }
 
 module.exports = checkToken;

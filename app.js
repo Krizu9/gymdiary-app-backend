@@ -15,14 +15,14 @@ app.use((req, res, next) => {
 });
 
 // routes
-const actionsRouter = require('./routes/actions');
-app.use('/actions', actionsRouter);
-
 const userdataRouter = require('./routes/userdata');
 app.use('/userdata', userdataRouter);
 
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
+
+const workoutTemplateRouter = require('./routes/workoutTemplate.js');
+app.use('/workoutTemplate', workoutTemplateRouter);
 
 // error handling middleware
 app.use((err, req, res, next) => {

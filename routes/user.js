@@ -6,7 +6,6 @@ const login = require('../controller/login');
 const checkToken = require('../controller/checkToken');
 
 router.post('/register', async (req, res) => {
-    console.log('register request received');
     try {
         await createUser(req, res);
     } catch (error) {
