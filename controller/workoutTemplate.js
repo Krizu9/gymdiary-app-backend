@@ -2,9 +2,11 @@ const WorkoutTemplate = require('../models/workoutTemplate');
 
 // Get workout templates by user ID
 const getWorkoutsByUserId = async (req, res) => {
+    console.log('Request User:', req.user);
     try {
         const userId = req.user.id;
         const workoutsModels = await WorkoutTemplate.find({ userId });
+        console.log('Workout Templates:', workoutsModels);
         res.status(200).json(workoutsModels);
     } catch (error) {
         console.error('Error fetching workouts:', error);
@@ -14,14 +16,14 @@ const getWorkoutsByUserId = async (req, res) => {
 
 // Create a new workout template
 const createWorkoutTemplate = async (req, res) => {
-
+    console.log('Request Body:', req.body);
     try {
         const userId = req.user.id; // Extract userId from the request object set by authMiddleware
         const { name, movements } = req.body;
 
         // Validate input
         if (!name || !Array.isArray(movements) || movements.some(movement =>
-            movement.index == null || !movement.movement || movement.sets == null || movement.lowestReps == null || movement.highestReps == null)) {
+            !movement.movement || movement.sets == null || movement.lowestReps == null || movement.highestReps == null)) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
@@ -32,15 +34,17 @@ const createWorkoutTemplate = async (req, res) => {
             movements
         });
 
-        await newWorkoutTemplate.save();
+        const savedWorkoutTemplate = await newWorkoutTemplate.save();
 
-        res.status(201).json({ message: 'Workout template created successfully', workoutTemplate: newWorkoutTemplate });
+        console.log('Saved Workout Template:', savedWorkoutTemplate);
+        res.status(201).json({ message: 'Workout template created successfully', workoutTemplate: savedWorkoutTemplate });
     } catch (error) {
         // Debugging: Log error details
         console.error('Error creating workout template:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 
 

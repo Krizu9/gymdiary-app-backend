@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const workoutMovementSchema = new mongoose.Schema({
-    index: { type: Number, required: true },
     movement: { type: String, required: true },
     sets: { type: Number, required: true },
     lowestReps: { type: Number, required: true },
@@ -14,4 +13,4 @@ const workoutTemplateSchema = new mongoose.Schema({
     movements: [workoutMovementSchema], // Array of movements
 }, { timestamps: true });
 
-module.exports = mongoose.model('workoutTemplate', workoutTemplateSchema);
+module.exports = mongoose.model('WorkoutTemplate', workoutTemplateSchema);
