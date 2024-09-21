@@ -24,6 +24,9 @@ app.use('/user', userRouter);
 const workoutTemplateRouter = require('./routes/workoutTemplate.js');
 app.use('/workoutTemplate', workoutTemplateRouter);
 
+const workoutRouter = require('./routes/workout');
+app.use('/workout', workoutRouter);
+
 
 // error handling middleware
 app.use((err, req, res, next) => {

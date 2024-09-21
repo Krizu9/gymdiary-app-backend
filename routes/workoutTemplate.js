@@ -1,4 +1,4 @@
-// routes/workout.js
+// routes/workoutTemplate.js
 const express = require('express');
 const router = express.Router();
 const { getWorkoutsByUserId, createWorkoutTemplate, deleteWorkoutTemplate, updateWorkoutTemplate } = require('../controller/workoutTemplate');
