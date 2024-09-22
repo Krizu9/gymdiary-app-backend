@@ -8,15 +8,20 @@ const getLatestWorkoutByTemplateId = async (req, res) => {
         const { templateId } = req.params;
 
         // find the most recent workout for the given user and template
-        const latestWorkout = await workout.findOne({ userId, workoutTemplateId: templateId }).sort({ date: -1 });
+        const latestWorkout = await workout
+            .findOne({ userId, workoutTemplateId: templateId })
+            .sort({ date: -1 });
 
         console.log('Latest Workout:', latestWorkout);
-        res.status(200).json(latestWorkout || {}); // return an empty object if no workout is found
+
+        // Send `null` if no workout is found, instead of an empty object
+        res.status(200).json(latestWorkout || null);
     } catch (error) {
         console.error('Error fetching latest workout:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 const getWorkoutsByTemplateId = async (req, res) => {
     try {
