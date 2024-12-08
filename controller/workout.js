@@ -41,7 +41,6 @@ const getWorkoutsByTemplateId = async (req, res) => {
 
 
 // Create a new workout
-// Create a new workout
 const createWorkout = async (req, res) => {
     console.log('Request Body:', req.body);
     try {

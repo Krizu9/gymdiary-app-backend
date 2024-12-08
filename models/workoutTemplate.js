@@ -5,12 +5,12 @@ const workoutMovementSchema = new mongoose.Schema({
     sets: { type: Number, required: true },
     lowestReps: { type: Number, required: true },
     highestReps: { type: Number, required: true }
-}, { _id: false }); // Prevent creation of a separate ID for each movement
+}, { _id: false });
 
 const workoutTemplateSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     name: { type: String, required: true },
-    movements: [workoutMovementSchema], // Array of movements
+    movements: [workoutMovementSchema],
 }, { timestamps: true });
 
 module.exports = mongoose.model('WorkoutTemplate', workoutTemplateSchema);
